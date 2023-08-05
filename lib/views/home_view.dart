@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:tt9_betweener_challenge/controllers/link_controller.dart';
 import 'package:tt9_betweener_challenge/controllers/user_controller.dart';
+import 'package:tt9_betweener_challenge/views/search_view.dart';
 
 import '../models/link.dart';
 import '../models/user.dart';
@@ -30,7 +31,10 @@ class _HomeViewState extends State<HomeView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        leading: const SizedBox(),
+        leading: IconButton(
+          icon: const Icon(Icons.search),
+          onPressed: () => Navigator.pushNamed(context, SearchView.id),
+        ),
         actions: const [
           Icon(
             Icons.search_outlined,
@@ -104,7 +108,7 @@ class _HomeViewState extends State<HomeView> {
                       if (snapshot.hasData) {
                         if (index < snapshot.data!.length) {
                           // print('$index');
-                           print('>>>>>>>> ${snapshot.data?[index].username}');
+                          print('>>>>>>>> ${snapshot.data?[index].username}');
 
                           final link = snapshot.data?[index].title;
                           return Container(
@@ -124,7 +128,6 @@ class _HomeViewState extends State<HomeView> {
                                     ),
                                   ),
                                   Text(
-                                    
                                     '${snapshot.data?[index].username}',
                                     style: const TextStyle(
                                       fontSize: 12,

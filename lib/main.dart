@@ -9,6 +9,7 @@ import 'package:tt9_betweener_challenge/views/main_app_view.dart';
 import 'package:tt9_betweener_challenge/views/profile_view.dart';
 import 'package:tt9_betweener_challenge/views/receive_view.dart';
 import 'package:tt9_betweener_challenge/views/register_view.dart';
+import 'package:tt9_betweener_challenge/views/search_view.dart';
 import 'constants.dart';
 
 void main() async {
@@ -39,6 +40,7 @@ class MyApp extends StatelessWidget {
         addLink.id: (context) => const addLink(),
         EditLink.id: (context) => const EditLink(),
         EditProfile.id: (context) => const EditProfile(),
+        SearchView.id: (context) => const SearchView(),
 
         LoadingView.id: (context) => const LoadingView(),
         LoginView.id: (context) => const LoginView(),

@@ -5,8 +5,8 @@ import 'package:tt9_betweener_challenge/views/edit_link.dart';
 import 'package:tt9_betweener_challenge/views/edit_profile.dart';
 import 'package:tt9_betweener_challenge/views/home_view.dart';
 // import '../constants.dart';
-import '../controllers/add_follwer.dart';
 import '../controllers/delete_link.dart';
+import '../controllers/get_follow.dart';
 import '../controllers/link_controller.dart';
 import '../controllers/user_controller.dart';
 import '../models/link.dart';
@@ -25,13 +25,14 @@ class ProfileView extends StatefulWidget {
 
 class _ProfileViewState extends State<ProfileView> {
   late Future<User> user;
-  late Future<Followings> follower;
+  late Future<Followings> follow;
 
   late Future<List<Link>> links;
   @override
   void initState() {
     user = getLocalUser();
-    follower = getFollow(context);
+    follow = getFollow(context);
+    // follow = getFollow(context);
     links = getLinks(context);
     super.initState();
   }
@@ -163,57 +164,48 @@ class _ProfileViewState extends State<ProfileView> {
                           Row(
                             children: [
                               FutureBuilder(
-                                  future: follower,
+                                  future: follow,
                                   builder: (context, snapshot) {
                                     if (snapshot.hasError) {
                                       return Text(snapshot.error.toString());
                                     }
                                     if (snapshot.hasData) {
-                                      return TextButton(
-                                        style: ButtonStyle(
-                                          padding: MaterialStateProperty.all(
-                                            const EdgeInsets.symmetric(
-                                                vertical: 12, horizontal: 18),
+                                      return Row(
+                                        children: [
+                                          Container(
+                                            padding: const EdgeInsets.all(8),
+                                            decoration: BoxDecoration(
+                                              color: Color(0xffFFD465),
+                                              borderRadius:
+                                                  BorderRadius.circular(8),
+                                            ),
+                                            child: Text(
+                                              'followers: ${snapshot.data!.followersCount}',
+                                              style: const TextStyle(
+                                                  color: Color(0xff2D2B4E)),
+                                            ),
                                           ),
-                                          backgroundColor:
-                                              MaterialStateProperty.all<Color>(
-                                            const Color(0xffFFD465),
+                                          const SizedBox(
+                                            width: 4,
                                           ),
-                                        ),
-                                        onPressed: () {},
-                                        child: Text(
-                                          'follower: ${snapshot.data!.followersCount}',
-                                          style: const TextStyle(
-                                              color: Color(0xff2D2B4E)),
-                                        ),
+                                          Container(
+                                            padding: const EdgeInsets.all(8),
+                                            decoration: BoxDecoration(
+                                              color: Color(0xffFFD465),
+                                              borderRadius:
+                                                  BorderRadius.circular(8),
+                                            ),
+                                            child: Text(
+                                              'following: ${snapshot.data!.followingCount}',
+                                              style: const TextStyle(
+                                                  color: Color(0xff2D2B4E)),
+                                            ),
+                                          ),
+                                        ],
                                       );
                                     }
                                     return const Text('loading');
                                   }),
-                              const SizedBox(
-                                width: 4,
-                              ),
-                              TextButton(
-                                style: ButtonStyle(
-                                  padding: MaterialStateProperty.all(
-                                    const EdgeInsets.symmetric(
-                                      vertical: 12,
-                                      horizontal: 18,
-                                    ),
-                                  ),
-                                  backgroundColor:
-                                      MaterialStateProperty.all<Color>(
-                                    const Color(0xffFFD465),
-                                  ),
-                                ),
-                                onPressed: () {},
-                                child: const Text(
-                                  'following: 0',
-                                  style: TextStyle(
-                                    color: Color(0xff2D2B4E),
-                                  ),
-                                ),
-                              ),
                             ],
                           ),
                         ],
