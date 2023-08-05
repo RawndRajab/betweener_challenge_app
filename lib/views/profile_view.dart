@@ -42,7 +42,9 @@ class _ProfileViewState extends State<ProfileView> {
       appBar: AppBar(
         leading: IconButton(
           onPressed: () {
-            Navigator.pushNamed(context, HomeView.id);
+            Navigator.push(context, MaterialPageRoute(builder: (context) {
+              return HomeView();
+            }));
           },
           icon: const Icon(
             Icons.arrow_back_ios_new,
@@ -119,12 +121,12 @@ class _ProfileViewState extends State<ProfileView> {
                                 width: 100,
                               ),
                               IconButton(
-                                onPressed: () async {
-                                  print('awaait');
-                                  await Navigator.push(context,
-                                      MaterialPageRoute(builder: (context) {
-                                    return const EditProfile();
-                                  })).then((value) => null);
+                                onPressed: () {
+                                  // print('awaait');
+                                  // await Navigator.push(context,
+                                  //     MaterialPageRoute(builder: (context) {
+                                  //   return const EditProfile();
+                                  // })).then((value) => null);
                                 },
                                 icon: const Icon(
                                   Icons.edit_outlined,
@@ -231,7 +233,7 @@ class _ProfileViewState extends State<ProfileView> {
                   return Expanded(
                     child: ListView.separated(
                       itemCount: snapshot.data!.length,
-                      padding: const EdgeInsets.only(left: 12),
+                      padding: const EdgeInsets.symmetric(horizontal: 12),
                       itemBuilder: (context, index) {
                         if (snapshot.hasData) {
                           final link = snapshot.data?[index].title;
@@ -250,7 +252,11 @@ class _ProfileViewState extends State<ProfileView> {
                                           MaterialPageRoute(builder: (context) {
                                         return EditLink(
                                             idlink: snapshot.data?[index].id);
-                                      }));
+                                      })).then((value) {
+                                        setState(() {
+                                          links = getLinks(context);
+                                        });
+                                      });
                                       // setState(() {
                                       //   getLinks(context);
                                       // });
@@ -274,7 +280,7 @@ class _ProfileViewState extends State<ProfileView> {
                                         print('delte await');
                                         print(links);
                                         setState(() {
-                                          links=getLinks(context);
+                                          links = getLinks(context);
                                         });
                                       });
                                     },
@@ -292,29 +298,32 @@ class _ProfileViewState extends State<ProfileView> {
                                       ? const Color(0xffFEE2E7)
                                       : const Color(0xffE7E5F1),
                                   borderRadius: BorderRadius.circular(15)),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    '$link',
-                                    style: TextStyle(
-                                      letterSpacing: 2,
-                                      fontWeight: FontWeight.w500,
-                                      fontSize: 20,
-                                      color: index % 2 == 0
-                                          ? const Color(0xff783341)
-                                          : const Color(0xff2D2B4E),
+                              child: SizedBox(
+                                width: double.maxFinite,
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      '$link',
+                                      style: TextStyle(
+                                        letterSpacing: 2,
+                                        fontWeight: FontWeight.w500,
+                                        fontSize: 20,
+                                        color: index % 2 == 0
+                                            ? const Color(0xff783341)
+                                            : const Color(0xff2D2B4E),
+                                      ),
                                     ),
-                                  ),
-                                  Text(
-                                    'https://www.instagram.com/a7medhq/',
-                                    style: TextStyle(
-                                      color: index % 2 == 0
-                                          ? const Color(0xff9B6A73)
-                                          : const Color(0xff807D99),
+                                    Text(
+                                      '${snapshot.data?[index].link}',
+                                      style: TextStyle(
+                                        color: index % 2 == 0
+                                            ? const Color(0xff9B6A73)
+                                            : const Color(0xff807D99),
+                                      ),
                                     ),
-                                  ),
-                                ],
+                                  ],
+                                ),
                               ),
                             ),
                           );

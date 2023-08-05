@@ -20,8 +20,6 @@ class _EditLinkState extends State<EditLink> {
   TextEditingController _userContoller = TextEditingController();
   final _formKey = GlobalKey<FormState>();
 
-  // Future<Link>? new_links;
-  // Link link = Link();
   @override
   void dispose() {
     _titleController.dispose();
@@ -34,19 +32,14 @@ class _EditLinkState extends State<EditLink> {
       final body = {
         'title': _titleController.text,
         'link': _linkController.text,
-        'user': _userContoller.text
+        'username': _userContoller.text
       };
 
-      print(body['title']);
-      print(widget.idlink);
+      // print(body['title']);
+      // print(widget.idlink);
       UpdateLink(body, widget.idlink).then((link) async {
-        print(widget.idlink);
-        await Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) {
-            return const ProfileView();
-          }),
-        );
+        // print(widget.idlink);
+        Navigator.pop(context, true);
         return true;
       }).catchError((err) {
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
@@ -63,7 +56,7 @@ class _EditLinkState extends State<EditLink> {
       appBar: AppBar(
         leading: IconButton(
           onPressed: () {
-            Navigator.pop(context);
+            Navigator.pop(context, true);
           },
           icon: const Icon(
             Icons.arrow_back_ios_new,

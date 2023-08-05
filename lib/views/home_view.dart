@@ -26,8 +26,6 @@ class _HomeViewState extends State<HomeView> {
     super.initState();
   }
 
-
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -106,18 +104,35 @@ class _HomeViewState extends State<HomeView> {
                       if (snapshot.hasData) {
                         if (index < snapshot.data!.length) {
                           // print('$index');
+                           print('>>>>>>>> ${snapshot.data?[index].username}');
+
                           final link = snapshot.data?[index].title;
                           return Container(
                             padding: const EdgeInsets.fromLTRB(16, 18, 16, 0),
                             decoration: BoxDecoration(
                                 color: const Color(0xffFFE6A6),
                                 borderRadius: BorderRadius.circular(15)),
-                            child: Text(
-                              '$link',
-                              style: const TextStyle(
-                                fontSize: 18,
-                                color: Color(0xff784E00),
-                                fontWeight: FontWeight.w800,
+                            child: SizedBox(
+                              child: Column(
+                                children: [
+                                  Text(
+                                    '$link',
+                                    style: const TextStyle(
+                                      fontSize: 18,
+                                      color: Color(0xff784E00),
+                                      fontWeight: FontWeight.w800,
+                                    ),
+                                  ),
+                                  Text(
+                                    
+                                    '${snapshot.data?[index].username}',
+                                    style: const TextStyle(
+                                      fontSize: 12,
+                                      color: Color(0xff784E00),
+                                      fontWeight: FontWeight.w800,
+                                    ),
+                                  ),
+                                ],
                               ),
                             ),
                           );
@@ -126,33 +141,17 @@ class _HomeViewState extends State<HomeView> {
                           return Container(
                             padding: const EdgeInsets.fromLTRB(16, 8, 16, 0),
                             decoration: BoxDecoration(
-                                color: Color(0xffE7E5F1),
+                                color: const Color(0xffE7E5F1),
                                 borderRadius: BorderRadius.circular(15)),
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.start,
                               children: [
                                 IconButton(
                                   onPressed: () async {
-                                         await Navigator.push(context,
-                                            MaterialPageRoute(
-                                                builder: (context) {
+                                    await Navigator.push(context,
+                                        MaterialPageRoute(builder: (context) {
                                       return const addLink();
                                     }));
-                                    // Future<Link>? newlink =
-                                    //     await Navigator.push(context,
-                                    //         MaterialPageRoute(
-                                    //             builder: (context) {
-                                    //   return const addLink();
-                                    // }));
-                                    // print('$newlink lll');
-                                    // if (newlink != null) {
-                                    //   setState(() async {
-                                    //     links = getLinks(context);
-                                    //   });
-                                    // } else {
-                                    //   print('nullll');
-                                    // }
-                                    // update();
                                   },
                                   icon: const Icon(
                                     color: Color(0xff2D2B4E),

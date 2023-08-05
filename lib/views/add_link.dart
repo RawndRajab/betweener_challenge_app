@@ -7,6 +7,7 @@ import 'package:tt9_betweener_challenge/views/widgets/custom_text_form_field.dar
 import '../controllers/add_link_controllar.dart';
 import '../controllers/link_controller.dart';
 import '../models/user.dart';
+import 'home_view.dart';
 import 'main_app_view.dart';
 
 class addLink extends StatefulWidget {
@@ -39,13 +40,13 @@ class _addLinkState extends State<addLink> {
       final body = {
         'title': titleController.text,
         'link': linkController.text,
-        'user': userContoller.text
+        'username': userContoller.text
       };
-      print(body['title']);
+      print(body['username']);
 
       AddNewLink(body).then((link) async {
         await Navigator.push(context, MaterialPageRoute(builder: (context){
-          return MainAppView();
+          return const MainAppView();
         }
         )
         ,);
@@ -71,8 +72,9 @@ class _addLinkState extends State<addLink> {
       appBar: AppBar(
         leading: IconButton(
           onPressed: () {
-            Navigator.pop(context);
-          },
+Navigator.push(context, MaterialPageRoute(builder: (context) {
+              return HomeView();
+            }));          },
           icon: const Icon(
             Icons.arrow_back_ios_new,
             size: 28,
