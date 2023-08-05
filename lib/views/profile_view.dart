@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:tt9_betweener_challenge/models/follower.dart';
 import 'package:tt9_betweener_challenge/views/edit_link.dart';
-import 'package:tt9_betweener_challenge/views/edit_profile.dart';
+// import 'package:tt9_betweener_challenge/views/edit_profile.dart';
 import 'package:tt9_betweener_challenge/views/home_view.dart';
 // import '../constants.dart';
 import '../controllers/delete_link.dart';
@@ -12,7 +12,10 @@ import '../controllers/user_controller.dart';
 import '../models/link.dart';
 import '../models/user.dart';
 import 'add_link.dart';
-import 'login_view.dart';
+import 'edit_profile.dart';
+import 'followe_view.dart';
+import 'following_view.dart';
+// import 'login_view.dart';
 
 class ProfileView extends StatefulWidget {
   static String id = '/profileView';
@@ -122,12 +125,12 @@ class _ProfileViewState extends State<ProfileView> {
                                 width: 100,
                               ),
                               IconButton(
-                                onPressed: () {
-                                  // print('awaait');
-                                  // await Navigator.push(context,
-                                  //     MaterialPageRoute(builder: (context) {
-                                  //   return const EditProfile();
-                                  // })).then((value) => null);
+                                onPressed: () async {
+                                  print('edit profile');
+                                  await Navigator.push(context,
+                                      MaterialPageRoute(builder: (context) {
+                                    return const EditProfile();
+                                  })).then((value) => null);
                                 },
                                 icon: const Icon(
                                   Icons.edit_outlined,
@@ -171,34 +174,60 @@ class _ProfileViewState extends State<ProfileView> {
                                     }
                                     if (snapshot.hasData) {
                                       return Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.start,
                                         children: [
-                                          Container(
-                                            padding: const EdgeInsets.all(8),
-                                            decoration: BoxDecoration(
-                                              color: Color(0xffFFD465),
-                                              borderRadius:
-                                                  BorderRadius.circular(8),
-                                            ),
-                                            child: Text(
-                                              'followers: ${snapshot.data!.followersCount}',
-                                              style: const TextStyle(
-                                                  color: Color(0xff2D2B4E)),
+                                          TextButton(
+                                            onPressed: () {
+                                              Navigator.push(context,
+                                                  MaterialPageRoute(
+                                                      builder: (context) {
+                                                return FollowerUsers(
+                                                  users:
+                                                      snapshot.data!.followers,
+                                                );
+                                              }));
+                                            },
+                                            child: Container(
+                                              padding: const EdgeInsets.all(10),
+                                              decoration: BoxDecoration(
+                                                color: const Color(0xffFFD465),
+                                                borderRadius:
+                                                    BorderRadius.circular(8),
+                                              ),
+                                              child: Text(
+                                                'followers: ${snapshot.data!.followersCount}',
+                                                style: const TextStyle(
+                                                    color: Color(0xff2D2B4E)),
+                                              ),
                                             ),
                                           ),
                                           const SizedBox(
                                             width: 4,
                                           ),
-                                          Container(
-                                            padding: const EdgeInsets.all(8),
-                                            decoration: BoxDecoration(
-                                              color: Color(0xffFFD465),
-                                              borderRadius:
-                                                  BorderRadius.circular(8),
-                                            ),
-                                            child: Text(
-                                              'following: ${snapshot.data!.followingCount}',
-                                              style: const TextStyle(
-                                                  color: Color(0xff2D2B4E)),
+                                          TextButton(
+                                            onPressed: () {
+                                              Navigator.push(context,
+                                                  MaterialPageRoute(
+                                                      builder: (context) {
+                                                return FollowingUsers(
+                                                  users:
+                                                      snapshot.data!.following,
+                                                );
+                                              }));
+                                            },
+                                            child: Container(
+                                              padding: const EdgeInsets.all(10),
+                                              decoration: BoxDecoration(
+                                                color: const Color(0xffFFD465),
+                                                borderRadius:
+                                                    BorderRadius.circular(8),
+                                              ),
+                                              child: Text(
+                                                'following: ${snapshot.data!.followingCount}',
+                                                style: const TextStyle(
+                                                    color: Color(0xff2D2B4E)),
+                                              ),
                                             ),
                                           ),
                                         ],

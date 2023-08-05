@@ -6,14 +6,14 @@ import 'dart:convert';
 
 import 'package:shared_preferences/shared_preferences.dart';
 
-Future<Search>? searchUsersByName(Map<String,dynamic> body) async {
-  print('search');
+Future<bool>? AddFollow(Map<String,String?> body) async {
+  print('AddFollow------------');
   final SharedPreferences prefs = await SharedPreferences.getInstance();
 
   userModel.User user = userModel.userFromJson(prefs.getString('user')!);
   // try {
   final response = await http.post(
-    Uri.parse('https://www.osamapro.online/api/search'),
+    Uri.parse('https://www.osamapro.online/api/follow'),
     body: body,
     headers: {'Authorization': 'Bearer ${user.token}'},
   );
@@ -22,13 +22,10 @@ Future<Search>? searchUsersByName(Map<String,dynamic> body) async {
   if (response.statusCode == 200) {
     print('statuse code=200');
     final Map<String, dynamic> data = json.decode(response.body);
-    return Search.fromJson(data);
+    return true;
   } else {
     print('Search failed with status code: ${response.statusCode}');
     throw Exception('Failed to load users: ${response.body}');
   }
-  // } catch (e) {
-  //   print('Error during user search: $e');
-  //   throw Exception('Failed to perform user search.');
-  // }
+ 
 }

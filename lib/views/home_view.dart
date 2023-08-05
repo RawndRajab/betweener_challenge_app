@@ -31,23 +31,20 @@ class _HomeViewState extends State<HomeView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        leading: IconButton(
-          icon: const Icon(Icons.search),
-          onPressed: () => Navigator.pushNamed(context, SearchView.id),
-        ),
-        actions: const [
-          Icon(
-            Icons.search_outlined,
-            size: 32,
+        leading: const SizedBox(),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.search),
+            onPressed: () => Navigator.pushNamed(context, SearchView.id),
           ),
-          SizedBox(
+          const SizedBox(
             width: 8,
           ),
-          Icon(
+          const Icon(
             Icons.qr_code,
             size: 32,
           ),
-          SizedBox(
+          const SizedBox(
             width: 24,
           ),
         ],

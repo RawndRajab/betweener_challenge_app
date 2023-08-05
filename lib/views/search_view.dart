@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:tt9_betweener_challenge/views/widgets/custom_text_form_field.dart';
 import '../controllers/search_cont.dart';
 import '../models/search.dart';
+import 'ProfileUser.dart';
 
 class SearchView extends StatefulWidget {
   static String id = '/searchView';
@@ -16,13 +17,7 @@ class _SearchViewState extends State<SearchView> {
   Future<Search>? searchFuture;
 
   TextEditingController searchController = TextEditingController();
-  // String? searchQuery;
-
-  Future<Search> search() async {
-    Map<String, dynamic> searchParams = {'name': searchController.text};
-
-    return await searchUsersByName(searchParams);
-  }
+  late String searchQuery = '';
 
   @override
   Widget build(BuildContext context) {
@@ -47,10 +42,14 @@ class _SearchViewState extends State<SearchView> {
             padding: const EdgeInsets.all(16.0),
             child: Form(
               child: TextFormField(
-                onChanged: (value) {
-                  print('on change');
+                onFieldSubmitted: (value) {
+                  print('setstate');
+                  print('value   == $value');
+
+                  searchQuery = value;
+                  Map<String, dynamic> searchParams = {'name': searchQuery};
                   setState(() {
-                    searchController.text =value ;
+                    searchFuture = searchUsersByName(searchParams);
                   });
                 },
                 decoration: const InputDecoration(
@@ -64,7 +63,7 @@ class _SearchViewState extends State<SearchView> {
           ),
           Expanded(
             child: FutureBuilder<Search>(
-              future: search(),
+              future: searchFuture,
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
                   return const Center(child: CircularProgressIndicator());
@@ -79,8 +78,21 @@ class _SearchViewState extends State<SearchView> {
                   return ListView.builder(
                     itemCount: searchResults.user!.length,
                     itemBuilder: (context, index) {
-                      return ListTile(
-                        title: Text('${snapshot.data!.user![index].name}'),
+                      return GestureDetector(
+                        onTap: () {
+                          print('clickkkkkkk');
+                          Navigator.push(context,
+                              MaterialPageRoute(builder: (context) {
+                            return ProfileUser(
+                              searchInfo: snapshot.data!.user![index],
+                            );
+                          }));
+                        },
+                        child: Container(
+                          child: ListTile(
+                            title: Text('${snapshot.data!.user![index].name}'),
+                          ),
+                        ),
                       );
                     },
                   );
