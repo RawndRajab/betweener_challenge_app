@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:tt9_betweener_challenge/views/add_link.dart';
+import 'package:tt9_betweener_challenge/views/edit_link.dart';
+import 'package:tt9_betweener_challenge/views/edit_profile.dart';
 import 'package:tt9_betweener_challenge/views/home_view.dart';
 import 'package:tt9_betweener_challenge/views/loading_view.dart';
 import 'package:tt9_betweener_challenge/views/login_view.dart';
@@ -6,7 +9,6 @@ import 'package:tt9_betweener_challenge/views/main_app_view.dart';
 import 'package:tt9_betweener_challenge/views/profile_view.dart';
 import 'package:tt9_betweener_challenge/views/receive_view.dart';
 import 'package:tt9_betweener_challenge/views/register_view.dart';
-
 import 'constants.dart';
 
 void main() async {
@@ -34,6 +36,10 @@ class MyApp extends StatelessWidget {
           scaffoldBackgroundColor: kScaffoldColor),
       home: const LoadingView(),
       routes: {
+        addLink.id: (context) => const addLink(),
+        EditLink.id: (context) => const EditLink(),
+        EditProfile.id: (context) => const EditProfile(),
+
         LoadingView.id: (context) => const LoadingView(),
         LoginView.id: (context) => const LoginView(),
         RegisterView.id: (context) => const RegisterView(),

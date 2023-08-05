@@ -9,7 +9,6 @@ import 'package:tt9_betweener_challenge/views/register_view.dart';
 import 'package:tt9_betweener_challenge/views/widgets/custom_text_form_field.dart';
 import 'package:tt9_betweener_challenge/views/widgets/primary_outlined_button_widget.dart';
 import 'package:tt9_betweener_challenge/views/widgets/secondary_button_widget.dart';
-
 import '../controllers/auth_controller.dart';
 import 'widgets/google_button_widget.dart';
 
@@ -35,7 +34,7 @@ class _LoginViewState extends State<LoginView> {
       };
 
       login(body).then((user) async {
-        //save user locally
+        //save user locallyF
         final SharedPreferences prefs = await SharedPreferences.getInstance();
         await prefs.setString('user', userToJson(user));
 
