@@ -16,7 +16,7 @@ Future<Followings> getFollow(context) async {
   print('${response.statusCode} ');
   if (response.statusCode == 200) {
     final data = followingsFromJson(response.body);
-
+  print('${data} =========== data');
     return data;
   }
 

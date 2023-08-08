@@ -1,16 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_slidable/flutter_slidable.dart';
+// import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:tt9_betweener_challenge/controllers/add_follow_cont.dart';
-import 'package:tt9_betweener_challenge/models/follower.dart';
-import 'package:tt9_betweener_challenge/views/edit_link.dart';
+
 import 'package:tt9_betweener_challenge/views/home_view.dart';
-import '../controllers/delete_link.dart';
+
+// import '../models/link.dart';
 import '../controllers/get_follow.dart';
-import '../controllers/link_controller.dart';
-import '../controllers/user_controller.dart';
-import '../models/link.dart';
+import '../models/follower.dart';
 import '../models/search.dart' as searchh;
-import '../models/user.dart';
+// import '../models/user.dart';
 
 class ProfileUser extends StatefulWidget {
   static String id = '/profileUser';
@@ -23,7 +21,18 @@ class ProfileUser extends StatefulWidget {
 
 class _ProfileUserState extends State<ProfileUser> {
   Future<bool>? isAdd;
-  void followAdd() {}
+  late Future<Followings> follow;
+  Future<Followings> followw(){
+    follow = getFollow(context);
+return follow;
+  }
+  @override
+  void initState() {
+  //  print('${follow}');
+
+    // TODO: implement initState
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -121,30 +130,79 @@ class _ProfileUserState extends State<ProfileUser> {
                             color: Colors.white,
                           ),
                         ),
-                        TextButton(
-                          onPressed: () {
-                            print('succcesss');
-                            Map<String, String?> body = {
-                              'followee_id': widget.searchInfo.id.toString()
-                            };
+                        FutureBuilder(
+                            future: followw(),
+                            builder: (context, snapshot) {
+                              if (snapshot.hasData) {
+                                List follwinng = snapshot.data!.following;
+                                  print(snapshot.data!.following  );
 
-                            setState(() {
-                              print('add');
-                              isAdd = AddFollow(body);
-                            });
-                          },
-                          child: Container(
-                            padding: const EdgeInsets.all(10),
-                            decoration: BoxDecoration(
-                              color: const Color(0xffFFD465),
-                              borderRadius: BorderRadius.circular(15),
-                            ),
-                            child: Text(
-                              'ADD FOLLOW',
-                              style: const TextStyle(color: Color(0xff2D2B4E)),
-                            ),
-                          ),
-                        ),
+                                for (int i = 1; i < follwinng.length; i++) {
+                                  print('in loooop');
+                                  if (widget.searchInfo.id ==
+                                      follwinng[i]['id']) {
+                                    print("$i test ${widget.searchInfo.name}");
+                                    return const Text('FOLLOWINg');
+                                  }
+                                }
+                                return TextButton(
+                                  onPressed: () {
+                                    print('succcesss');
+                                    Map<String, String?> body = {
+                                      'followee_id':
+                                          widget.searchInfo.id.toString()
+                                    };
+                                    setState(() {
+                                      // print('add');
+                                      isAdd = AddFollow(body);
+                                    });
+                                  },
+                                  child: Container(
+                                    padding: const EdgeInsets.all(10),
+                                    decoration: BoxDecoration(
+                                      color: const Color(0xffFFD465),
+                                      borderRadius: BorderRadius.circular(15),
+                                    ),
+                                    child: Text(
+                                      'ADD FOLLOW',
+                                      style: const TextStyle(
+                                          color: Color(0xff2D2B4E)),
+                                    ),
+                                  ),
+                                );
+                                print('end for');
+                              }
+                              print('testttt');
+
+                              if (snapshot.hasError) {
+                                return Text(snapshot.error.toString());
+                              }
+                              return const Text('loading');
+                            }),
+                        // TextButton(
+                        //   onPressed: () {
+                        //     print('succcesss');
+                        //     Map<String, String?> body = {
+                        //       'followee_id': widget.searchInfo.id.toString()
+                        //     };
+
+                        //     setState(() {
+                        //       print('add');
+                        //       isAdd = AddFollow(body);
+                        //     });
+                        //   },
+                        //   child: Container(
+                        //     padding: const EdgeInsets.all(10),
+                        //     decoration: BoxDecoration(
+                        //       color: const Color(0xffFFD465),
+                        //       borderRadius: BorderRadius.circular(15),
+                        //     ),
+                        //     child: Text(
+                        //       'ADD FOLLOW',
+                        //       style: const TextStyle(color: Color(0xff2D2B4E)),
+                        //     ),
+                        //   ),
+                        // ),
                       ],
                     ),
                   ],

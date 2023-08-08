@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:tt9_betweener_challenge/models/follower.dart';
 
-import '../models/user.dart';
 
 class FollowerUsers extends StatefulWidget {
   final List<Follow> users;
